@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	
+	<package name="car" extends="struts-default" namespace="/car"
+		strict-method-invocation="false">
+		<action name="owned_*" class="com.hd.action.OwnedAction" method="{1}">
+			<result name="success">/WEB-INF/owned/owned.jsp</result>
+				<result name="update">/WEB-INF/owned/ownedUpdate.jsp</result>
+				<result name="input">/WEB-INF/owned/owned.jsp</result>
+			<result name="query" type="redirectAction">owned_query</result>
+			<result name="download" type="stream">
+				<!-- 设置文件下载的类型 application/octet-stream支持所有的下载类型 -->
+				<param name="contentType">application/octet-stream</param>
+				<!-- 设置文件下载的入口 -->
+				<param name="inputName">inputStream</param>
+				<!-- 设置下载窗口的类型 attachment:以窗口的形式打开 -->
+				<param name="contentDisposition">attachment;filename=exportCar.xls</param>
+			</result>
+		</action>
+		
+		<action name="app_*" class="com.hd.action.VehicleApplicationAction" method="{1}">
+             <result name="list" >/WEB-INF/app/applist.jsp</result>
+             <result name="dispatchlist" >/WEB-INF/app/dispatchlist.jsp</result>
+            <result name="success" >/WEB-INF/app/app.jsp</result>
+             <result name="choiceCar" >/WEB-INF/app/choiceCar.jsp</result>
+             <result name="query" type="redirectAction">app_query?state=${state}</result>
+         </action>
+         
+         <action name="reg_*" class="com.hd.action.VehicleRegisterAction" method="{1}">
+             <result name="list" >/WEB-INF/app/applist.jsp</result>
+             <result name="dispatchlist" >/WEB-INF/app/dispatchlist.jsp</result>
+            <result name="success" >/WEB-INF/app/app.jsp</result>
+             <result name="choiceCar" >/WEB-INF/app/choiceCar.jsp</result>
+             <result name="query" type="redirectAction">app_dispatch</result>
+         </action>
+	</package>
+</struts>

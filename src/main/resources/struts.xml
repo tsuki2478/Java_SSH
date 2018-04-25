@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<!-- 添加自动刷新配置文件的常量设置 -->
+	<constant name="struts.configuration.xml.reload" value="true"></constant>
+	
+		<!-- 登录模块 -->
+	<package name="login" extends="struts-default" namespace="/" strict-method-invocation="false">
+		<action name="login_*" class="com.hd.action.LoginAction" method="{1}">
+			<result name="home">/WEB-INF/home.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action>
+	</package>
+	
+		<!--专门设置拦截器的包  -->
+	<package  name="defaultpack"  extends="struts-default" namespace="/" strict-method-invocation="false">
+	
+	<!--注册拦截器  -->
+	<interceptors>
+		<interceptor name="secuityInterceptor" class="com.hd.interceptor.SecurityInterceptor"></interceptor>
+	
+	<!--拦截器栈  -->
+	<interceptor-stack name="secuityInterceptorStack">
+	<interceptor-ref name="secuityInterceptor"></interceptor-ref>
+	
+	<!--默认拦截器  -->
+	<interceptor-ref name="defaultStack"></interceptor-ref>
+	</interceptor-stack>
+	</interceptors>
+	<!--设置默认全局拦截器  -->
+	<default-interceptor-ref name="secuityInterceptorStack"></default-interceptor-ref>
+	
+	<!--设置全局的返回信息  -->
+	<global-results>
+	<result name="home">/WEB-INF/home.jsp</result>
+	<!--这样设置。。只要返回login都会实行  -->	
+	<result name="login">/login.jsp</result>
+	</global-results>
+	</package>
+	
+	<include file="struts_sys.xml"></include>
+	<include file="struts_car.xml"></include>
+</struts>	
